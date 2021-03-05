@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         val txt : TextView = findViewById(R.id.txt)
         var txt_texte : String = txt.text.toString()
         var i = 0
-        while (i < 100) {
+        while (i < 500) {
             txt_texte = StringBuilder().append(txt_texte).append(PI * i).toString()
             i++
         }
