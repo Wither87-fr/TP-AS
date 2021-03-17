@@ -6,11 +6,14 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.provider.Settings
 import android.widget.Button
+import android.widget.ImageView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
@@ -21,13 +24,27 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if(askForPermission()) {
-            //TODO remplir if
+            val uri = intent.getParcelableExtra<Uri>(Intent.EXTRA_TEXT)
+            val imageView = findViewById<ImageView>(R.id.chosen_photo)
+            if (uri != null) imageView.setImageURI(uri)
         }
 
         val btnGallerie : Button = findViewById(R.id.chose_photo)
         btnGallerie.setOnClickListener {
             val intent = Intent(this@MainActivity, GallerieActivity::class.java)
             startActivity(intent)
+        }
+        val btnCamera : Button = findViewById(R.id.take_photo)
+        btnCamera.setOnClickListener {
+            capturePhoto()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE && data != null) {
+            val imageView = findViewById<ImageView>(R.id.chosen_photo)
+            imageView.setImageBitmap(data.extras!!.get("data") as Bitmap)
         }
     }
 
@@ -86,5 +103,10 @@ class MainActivity : AppCompatActivity() {
                 })
             .setNegativeButton("Cancel", null)
             .show()
+    }
+
+    fun capturePhoto() {
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(cameraIntent, REQUEST_CODE)
     }
 }
