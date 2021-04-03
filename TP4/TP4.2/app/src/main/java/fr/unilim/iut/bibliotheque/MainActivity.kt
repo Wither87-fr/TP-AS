@@ -19,17 +19,17 @@ class MainActivity : AppCompatActivity() {
     }
     //method for saving records in database
     fun saveRecord(view : View) {
-        val id = u_id.text.toString()
-        val name = u_name.text.toString()
-        val email = u_email.text.toString()
+        val l_id = id.text.toString()
+        val l_isbn = isbn.text.toString()
+        val l_titre = titre.text.toString()
         val databaseHandler = DatabaseHandler(this)
-        if(id.trim()!="" && name.trim()!="" && email.trim()!=""){
-            val status = databaseHandler.addLivre(EmpModelClass(Integer.parseInt(id),name, email))
+        if(l_id.trim()!="" && l_isbn.trim()!="" && l_titre.trim()!=""){
+            val status = databaseHandler.addLivre(Livre(Integer.parseInt(l_id),l_isbn, l_titre))
             if(status > -1){
                 Toast.makeText(applicationContext,"record save",Toast.LENGTH_LONG).show()
-                u_id.text.clear()
-                u_name.text.clear()
-                u_email.text.clear()
+                id.text.clear()
+                isbn.text.clear()
+                titre.text.clear()
             }
         }else{
             Toast.makeText(applicationContext,"id or name or email cannot be blank",Toast.LENGTH_LONG).show()

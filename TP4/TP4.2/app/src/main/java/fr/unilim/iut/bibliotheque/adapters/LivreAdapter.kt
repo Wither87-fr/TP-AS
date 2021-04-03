@@ -21,8 +21,8 @@ class LivreAdapter(private val context: Activity, private val id: Array<String>,
         val titreText = rowView.findViewById(R.id.textViewTitre) as TextView
 
         idText.text = "Id: ${id[position]}"
-        isbnText.text = "Name: ${name[position]}"
-        titreText.text = "Email: ${email[position]}"
+        isbnText.text = "ISBN: ${name[position]}"
+        titreText.text = "Titre: ${email[position]}"
         return rowView
     }
 }
